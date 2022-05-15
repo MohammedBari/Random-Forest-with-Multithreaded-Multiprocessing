@@ -107,18 +107,10 @@ def runPredictions2():
     print('Testing Features Shape:', X_test.shape)
     print('Testing Labels Shape:', y_test.shape)
 
-    # Running model, 1000 trees
     rf = RandomForestClassifier(n_estimators=1500)
     rf.fit(X_train, y_train)
     predictions = rf.predict(X_test)
     print(predictions)
-
-    # Print one tree to file
-    # print('\n')
-    # rftree = rf.estimators_[5]
-    # export_graphviz(rftree, out_file='RFOutput/tree2.dot', feature_names=feature_list, rounded=True, precision=1)
-    # (graph,) = pyd.graph_from_dot_file('RFOutput/tree2.dot')
-    # graph.write_png('RFOutput/tree2.png')
 
     output = pd.DataFrame({'Exists': predictions})
     output.to_csv('RFOutput/outp2.csv', index=False)

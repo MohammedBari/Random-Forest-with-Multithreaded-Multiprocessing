@@ -50,6 +50,7 @@ print('Training Features Shape:', X_train.shape)
 print('Training Labels Shape:', y_train.shape)
 print('Testing Features Shape:', X_test.shape)
 global preds
+threadTime = [0] * 3
 
 
 class threads(threading.Thread):
@@ -61,7 +62,6 @@ class threads(threading.Thread):
         self.X_train = X_train
         self.wait = wait
 
-
     def run(self):
         i = 0
         runPredictions(self.wait, self.X_train, self.X_test, self.y_train, self.y_test, featuresl)
@@ -69,14 +69,15 @@ class threads(threading.Thread):
 
 
 def runPredictions(wait, Xtr, Xtes, ytr, yte, feats):
+    tic = time.time()
     i = 0
     print('\n')
     while i < 1:
         print('\n')
         time.sleep(wait)
 
-        rf = RandomForestClassifier(n_estimators=1500, random_state=1)
-        # rf = RandomForestClassifier(n_estimators=1500, max_depth=50, random_state=1, n_jobs=4)
+        # rf = RandomForestClassifier(n_estimators=1500, random_state=1)
+        rf = RandomForestClassifier(n_estimators=1500, max_depth=50, random_state=1, n_jobs=4)
         rf.fit(Xtr, ytr)
         prediction = rf.predict(Xtes)
 
@@ -96,9 +97,9 @@ def runPredictions(wait, Xtr, Xtes, ytr, yte, feats):
         print(prediction)
 
         output = pd.DataFrame({'Exists': yte})
-        temp = i+ 1
-        output.to_csv('ThreadOutput/outp%s.csv' % temp , index=False)
-        print("outputted %s" % temp )
+        temp = i + 1
+        output.to_csv('ThreadOutput/outp%s.csv' % temp, index=False)
+        print("outputted %s" % temp)
         print(prediction)
 
         # Variable importance
@@ -106,6 +107,8 @@ def runPredictions(wait, Xtr, Xtes, ytr, yte, feats):
         feature_importances = [(feature, round(importance, 2)) for feature, importance in zip(feats, importance)]
         feature_importances = sorted(feature_importances, key=lambda x: x[1], reverse=True)
         [print('Variable:  {:20} Importance: {}'.format(*pair)) for pair in feature_importances]
+        toc = time.time()
+        threadTime[i] = toc - tic
         i = i + 1
 
 
@@ -127,4 +130,5 @@ if __name__ == "__main__":
     # thread4.join()
 
     toc = time.time()
+    print(str(threadTime))
     print('\nDone in {:.4f} seconds'.format(toc - tic))
