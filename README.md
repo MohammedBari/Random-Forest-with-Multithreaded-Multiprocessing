@@ -1,7 +1,9 @@
 “Random Forest with Threading and Multiprocessing”
+
 Undergraduate Research Project - Cal Poly Pomona
 
 Mohammed Bari
+
 Professor John Korah
 
 This project aims to identify efficient solutions for the creation of species distribution models from satellite images of regions. These species distribution maps are based on classification tree (CT) algorithms, which aims to produce categorical predictions. Employing CT algorithms through the random forest method, the prediction models are created with presence only data. Species distribution models are predictive models that can estimate the relationships between environmental characteristics of an area and the species occurrences within an area. With machine learning, these models can be created with more efficient functions and results, such as being able to use certain algorithms to arrive at an output. This paper will focus on Random Forest algorithms for use with species distribution models, in addition to a multithreaded parallelized implementation, a potential tool for the large amounts of data that are used. The strengths and drawbacks will be explored RF working with data sets to produce occurrence data, and its performance will be evaluated across various parallelized implementations.
